@@ -7,7 +7,7 @@ ini_set('display_startup_errors', 'On');
 include('testRabbitMQClient.php');
 set_error_handler('logErrors');
 $regUsername = strtolower($_GET['registerUsername']);
-$regPassword = strtolower($_GET['registerPassword']);
+$regPassword = $_GET['registerPassword'];
 
 if($regUsername == '' || $regPassword == '' || $regUsername == null || $regPassword == null){
         echo "Username or Password field left empty, please try again with valid credentials.";
@@ -15,7 +15,8 @@ if($regUsername == '' || $regPassword == '' || $regUsername == null || $regPassw
 	exit();
 }
 
-$response = registration($regUsername, $regPassword);
+$hashed = hash('sha512', $regPassword);
+$response = registration($regUsername, $hashed);
 
 if($response == true){
 	header("location:../loginPage.php?registration=successful");
