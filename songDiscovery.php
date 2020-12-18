@@ -1,19 +1,22 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 'On');
-
 include 'testRabbitMQClient.php';
-set_error_handler('logErrors');
 session_start();
 ?>
 
 <!DOCTYPE html>
 <html>
 <body>
-
+<style>
+body {
+  background-color: lightgrey;
+}
+</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <center>
-
-<h1><u>Welcome to Song Discovery</u></h1>
+ <div class="w3-container w3-cyan">
+<h1><u>Welcome to Song Discovery</u></h1></div>
 
 <?php
 
@@ -65,16 +68,19 @@ for($i=0; $i<$len; $i++){ ?>
 
 <hr>
 
+<div class="w3-row w3-black">
+
 <?php
 
-echo '<a href="homepage.php">Homepage</a> | ';
-echo '<a href="profile.php">Your Profile</a> | ';
-echo '<a href="songSearcher.php">Song Search</a> | ';
-echo '<br><br><a href="logout.php?logout">Logout</a>';
+echo '<div class="w3-quarter w3-black"> <a href="homepage.php">Homepage</a></div>';
 
+echo '<div class="w3-quarter w3-black"> <a href="songDiscovery.php">Song Discovery</a></div>';
+
+echo '<div class="w3-quarter w3-black"><a href="songSearcher.php">Song Search</a></div>';
+
+echo '<div class="w3-quarter w3-black"> <a href="logout.php?logout">Logout</a></div>';
 ?>
 
 </center>
 </body>
 </html>
-
