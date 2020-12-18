@@ -35,7 +35,7 @@ function login($username, $password){
 
 	$request['type'] = "login";
 	$request['username'] = strToLower($username);
-	$request['password'] = strToLower($password);
+	$request['password'] = $password;
 	
 	$response = $client->send_request($request);
 	#$response = $client->publish($request);
@@ -50,8 +50,8 @@ function registration($username, $password){
 	
 	$request = array();
 	$request['type'] = "registerAccount";
-	$request['registerUsername'] = strtolower($username);
-	$request['registerPassword'] = strtolower($password);
+	$request['registerUsername'] = strToLower($username);
+	$request['registerPassword'] = $password;
 
 	$response = $client->send_request($request);
         #$response = $client->publish($request);
