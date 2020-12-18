@@ -1,21 +1,37 @@
+#!/usr/bin/php
 <?php
 
+error_reporting(E_ALL);
+ini_set('display_errors', 'On');
+ini_set('display_startup_errors', 'On');
+session_start();
+include('testRabbitMQClient.php');
+logErrors(error_get_last()["type"], error_get_last()["message"], error_get_last()["file"], error_get_last()["line"]);
 
-if (!isset($_POST))
-{
-	$msg = "NO POST MESSAGE SET, POLITELY FUCK OFF";
-	echo json_encode($msg);
-	exit(0);
+$username = strtolower($_GET['username']);
+$password = $_GET['password'];
+if($username == '' || $password == '' || $username == null || $password == null){
+	header("location:../loginPage.php?login=blank");
+	$logText1 = " Login attempt failed due to null entry.\n";
+	logLogin($logText1);
+	exit();
+
 }
-$request = $_POST;
-$response = "unsupported request type, politely FUCK OFF";
-switch ($request["type"])
-{
-	case "login":
-		$response = "login, yeah we can do that";
-	break;
+$hashed = hash('sha512', $password);
+$loginResponse = login($username, $hashed);
+
+if($loginResponse == true){
+	$_SESSION['username'] = $username;
+	header("location:./homepage.php");
+	$logText2 = "  Login attempt from User: $username | Login Successful.\n";
+	logLogin($logText2);
 }
-echo json_encode($response);
-exit(0);
+
+elseif($loginResponse == false){
+	header("location:../loginPage.php?login=failed");
+	$logText3 = " Login attempt from User: $username | Failed due to incorrect credentials.\n";
+	logLogin($logText3);
+}
+
 
 ?>
